@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visual Cards - Example 2</title>
+    <script data-main="example2" src="../third_party/require.js"></script>
+    <style>
+        body {
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Visual Cards - Example 2</h1>
+A sample to demonstrate animation support.<br>
+Please select the renderer backend to see the differences between WebGL, Canvas and DOM renderer.
+<br><br>
+<select id="backendSelectionId" onchange="location = 'example2.html?'+this.options[this.selectedIndex].value;">
+    <option value="webgl">WebGL</option>
+    <option value="canvas">Canvas</option>
+    <option value="dom">DOM</option>
+</select>
+
+<br><br>
+
+<div id="rendererContainer"></div>
+
+</body>
+</html>
