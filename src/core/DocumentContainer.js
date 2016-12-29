@@ -1,11 +1,9 @@
 define(['src/core/Node',
         'src/core/NodeEventPublisher',
-        'src/core/DocumentConnector',
         'src/renderer/RenderScheduler',
         'src/renderer/DOMAdapter'],
     function (Node,
               NodeEventPublisher,
-              DocumentConnector,
               RenderScheduler,
               DOMAdapter) {
         'use strict';
@@ -50,9 +48,11 @@ define(['src/core/Node',
 
                 if(this.options.connectToServer === true)
                 {
-                    this.documentConnector = new DocumentConnector(this.rootNode, this.options.serverAppId, this.options.clearServerQueue);
-                    this.documentConnector.init();
-                    this.nodeEventPublisher.addListener(this.documentConnector);
+                    require(['src/core/DocumentConnector'], function(DocumentConnector){
+                        this.documentConnector = new DocumentConnector(this.rootNode, this.options.serverAppId, this.options.clearServerQueue);
+                        this.documentConnector.init();
+                        this.nodeEventPublisher.addListener(this.documentConnector);
+                    }.bind(this));
                 }
 
                 if(this.options.renderer === 'dom')
