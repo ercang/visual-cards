@@ -1,11 +1,11 @@
 # Whats is Visual-Cards?
 Visual Cards is javascript library that can be used in single page web applications. It is written to replace document object model (DOM). Any application that is developed using visual-cards, can be drawn by different backends (DOM, Canvas or WebGL) by passing a single parameter.
 
-Main motivation is to find a way to increase performance of web applications for embedded devices such as Smart TVs, set-top-boxes (STB) or smart phones. This project was inspired by project Gibbon from Netflix which is not open-source but some information can be found on the internet. If you want to learn more about project Gibbon, you can watch the video linked below.
+Main motivation is to find a way to increase performance of web applications for embedded devices such as Smart TVs, set-top-boxes (STB) or smart phones. This project was inspired by project Gibbon from Netflix which is not open-source. Some information can be found on the internet. If you want to learn more about project Gibbon, you can watch the video linked below.
 
 https://www.youtube.com/watch?v=eNC0mRYGWgc
 
-Usually TV user-interface (10 foot user interface https://en.wikipedia.org/wiki/10-foot_user_interface ) are consist of big images and less text. Mostly target design aspect ratio is constant. It is also easier to position elements as relative to their parents. In order to use visual-cards, application should not need a flow based positioning as CSS allows.
+Usually TV user-interface (10 foot user interface https://en.wikipedia.org/wiki/10-foot_user_interface ) consists of big images and less text. Targeted design aspect ratio is mostly constant (eg. 16:9). It is also easier to position elements as relative to their parents. In order to use visual-cards, application should not need a flow based positioning as CSS allows.
 
 ## TL;DR
 See examples at the link below and switch between renderer backends (DOM, Canvas and WebGL)
@@ -32,47 +32,47 @@ CommunicationServer script is used as a small HTTP server for development. Also 
 
 # Quick Start Guide
 
-You can checkout the example1 to see how it works.
+You can examine the example1 to see how it works.
 
 In HTML file, visual-cards needs a div to attach canvas element into it.
 
 Example1.html
-~~~~javascript
+```javascript
 <div id="rendererContainer"></div>
-~~~~
+```
 
 Visual-cards uses RequireJS. Script file must be included similar to this. Paths are given as if the files in “examples” folder.
 
-~~~~javascript
+```javascript
 <script data-main="example1" src="../third_party/require.js"></script>
-~~~~
+```
 
 When require.js is included it loads “example1.js” and runs that script.
 
 Following code, creates visual-cards instance and initializes it.
 
-~~~~javascript
+```javascript
 var container = document.getElementById('rendererContainer');
 this.visualCards = new VisualCards({
    'container': container,
    'width': 900,
    'height': 600,
-   'renderer': selectedBackend});
+   'renderer': 'webgl'});
 this.visualCards.init();
-~~~~
+```
 
 Background color of the root node can be changed like this.
-~~~~javascript
+```javascript
 var root = this.visualCards.getRootNode();
 root.setProp({'backgroundColor': '#999999'});
-~~~~
+```
 
 This ‘root’ is the start of the virtual DOM and it is a (virtual) node object.
 
 ### How to add a simple node
 Another node can be added like this.
 
-~~~~javascript
+```javascript
 var titleNode = this.visualCards.createNode();
 titleNode.setProp({'text': 'My Title',
    'top': 20,
@@ -84,13 +84,13 @@ titleNode.setProp({'text': 'My Title',
    'fontFamily': 'sans-serif'
 });
 root.appendChild(titleNode);
-~~~~
+```
 
 All positions are relative to its parent node. Also it is possible to add a child to “titleNode”. Any child of “titleNode” will start at “top”:20 and “left”: 250.
 
 ### How to add a simple animation
 All animations are managed by AnimationRunner object. This basically sets node properties in constant intervals.
-~~~~javascript
+```javascript
 this.visualCards.animate({node: titleNode,
    from: {width: 500,
        height: 50,
@@ -106,14 +106,14 @@ this.visualCards.animate({node: titleNode,
    loop: true,
    loopReverse: true,
    duration: 1000});
-~~~~
+```
 
 This “animate” functions is similar to jQuery’s animate. It basically interpolates between “from” parameters to “to” parameters in “duration” milliseconds. If “loop” is set to true, animation will run forever. If “loopReverse” is set to true, when animation is finished it will revert back to starting values. “easing” is the function name for interpolation function.
 
 “easing” can be “linear”, “easeInQuad”, “easeOutQuad”, “easeInOutQuad”, “easeInCubic”, “easeOutCubic”, “easeInOutCubic”. Other functions can be added to src/core/Easing.js if needed.
 
 # Examples
-After running CommunicationServer script, navigate to http://localhost:8080. You will see the home page that contains links to the examples. Or you can visit the demo page
+After running CommunicationServer script, navigate to http://localhost:8080. You will see the home page that contains links to the examples. Or you can visit the demo page.
 
 https://ercang.github.io/visual-cards/
 
@@ -144,7 +144,7 @@ https://ercang.github.io/visual-cards/examples/example3.html?canvas
 
 # Benchmark Tests
 
-Benchmark tests are used for measuring device's performance (eg. smartphone or TV). These tests are run on different platform to measure performance of rendering backends. Result can be found below.
+Benchmark tests are used for measuring device's performance (eg. smartphone or TV). These tests are run on different platforms to measure performance of rendering backends. Result can be found below.
 
 -- [BENCHMARK RESULTS SHOULD BE HERE] --
 
@@ -214,7 +214,7 @@ findById(id)
 
 # Related Projects & References
 
-These projects are listed here because I checked these project before implementing visual-cards. I am not directly compare these projects to mine, as these projects are in production. These projects are here for reference.
+Projects listed here for reference purposes.
 
 ### BBC T.A.L.
 
@@ -238,13 +238,13 @@ http://engineering.flipboard.com/2015/02/mobile-web/
 Another similar project is Flipboard’s ReactCanvas. This one is similar to Netflix Gibbon. It uses ReactJS, but rendering is done on a canvas element. Their motivation is to reach 60fps on mobile browsers.
 
 # Notes on Text Rendering
-Text rendering depends on the renderer backend. If DOM is selected as backend, then text rendering will be done by simple setting the innerHTML property of an element.
+Text rendering depends on the renderer backend. If DOM is selected as backend, then text rendering will be done by simply setting the innerHTML property of an element.
 
-If canvas is selected as backend, then text rendering will be done by drawing text into an offscreen canvas element. This offscreen canvas element is associated with the node. If node needs to be draw again, dirty region is copied from offscreen canvas to main canvas element. This approach is faster as text drawing is not called again, also partial update is easier. Drawback of this method is memory. Using an offscreen buffer for every text element requires high memory. This may be a problem on embedded devices.
+If canvas is selected as backend, then text rendering will be done by drawing text into an offscreen canvas element. This offscreen canvas element is associated with the node. If node needs to be draw again, dirty region is calculated and copied from offscreen canvas to main canvas element. This approach is faster as fillText() is not called again but using an offscreen buffer for every text element requires high memory. This may be a problem on embedded devices. In this method partial updates are easier to implement.
 
-WebGL has two methods for text rendering. If textType is “static”, then rendering will be done similar to canvas version. Whenever a text is updated, text is renderer to an offscreen canvas element. Then a texture is generated from this offscreen canvas element. When a node needs to be updates, this texture is drawn to display text.
+WebGL has two methods for text rendering. If textType is “static”, then rendering will be done similar to the canvas version. Whenever a text is updated, text is renderer to an offscreen canvas element. Then a texture is generated from this offscreen canvas element. When a node needs to be updated, this texture is drawn to display text.
 
-If textType is selected as “dynamic”, then bitmap fonts will be used. Two bitmap fonts are committed to this repo (FreeSans and FreeSerif), if another font is needed, then it must be added properly. If textType is dynamic, a vertex buffer object is generated for that text and whenever text needs to be drawn, generated geometry is displayed. An advantage of bitmap fonts is memory effectiveness. Bitmap fonts have low memory footprint. Canvas implementation only updates dirty regions but WebGL version always updates whole screen is invalidated.
+If textType is selected as “dynamic”, then bitmap fonts will be used. Two bitmap fonts are committed to this repo (FreeSans and FreeSerif), if another font is needed, then it must be added properly. If textType is dynamic, a vertex buffer object is generated for that text and whenever text needs to be drawn, generated geometry is displayed. An advantage of bitmap fonts is memory effectiveness. Bitmap fonts have low memory footprint. As a side note canvas implementation only updates dirty regions but WebGL version always updates the whole screen if virtual DOM tree is invalidated.
 
 Main drawback of bitmap fonts is localization support. Localisation is easier by using browser’s built-in fillText() command. When using bitmap fonts, all glyphs must be exported as bitmap. Another issue with bitmap fonts is kerning and glyph positioning. There might be errors using some fonts, position of some glyphs might be inaccurate.
 
