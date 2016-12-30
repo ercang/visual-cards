@@ -92,6 +92,7 @@ define([],
                 }
 
                 el.style.visibility = node.getProp('visibility');
+                el.style.whiteSpace = node.getProp('whiteSpace');
 
                 el.style.borderWidth = node.getProp('borderWidth') + 'px';
                 var borderOpacity = node.getProp('borderOpacity');
