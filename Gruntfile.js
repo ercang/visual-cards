@@ -3,18 +3,6 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
-        jasmine : {
-            src : 'src/**/*.js',
-            options : {
-                specs : 'spec/**/*.js',
-                template: require('grunt-template-jasmine-requirejs'),
-                templateOptions: {
-                    requireConfig: {
-                        baseUrl: ''
-                    }
-                }
-            }
-        },
         jshint: {
             all: [
                 'Gruntfile.js',
@@ -27,10 +15,9 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    grunt.registerTask('test', ['jshint', 'jasmine']);
+    grunt.registerTask('test', ['jshint');
 
     grunt.registerTask('default', ['test']);
 
