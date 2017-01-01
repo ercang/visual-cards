@@ -144,9 +144,7 @@ https://ercang.github.io/visual-cards/examples/example3.html?canvas
 
 # Benchmark Tests
 
-Benchmark tests are used for measuring device's performance (eg. smartphone or TV). These tests are run on different platforms to measure performance of rendering backends. Result can be found below.
-
--- [BENCHMARK RESULTS SHOULD BE HERE] --
+Benchmark tests are used for measuring device's performance (eg. smartphone or TV). These tests are run on different platforms to measure performance of rendering backends.
 
 # Supported virtual DOM node properties
 There is only one type of “Node” that can be added to the virtual DOM. This ‘node’ has similar properties to standard DOM element.
